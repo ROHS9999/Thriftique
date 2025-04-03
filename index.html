@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thriftique - Bold & Trendy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* 🔹 Category Section Styling */
+        .category-container {
+            display: flex;
+            justify-content: space-around;
+            gap: 15px;
+            padding: 20px;
+        }
+
+        .category-btn {
+            position: relative;
+            width: 200px;
+            height: 300px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        /* 🔹 Dark Overlay Effect */
+        .category-btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            transition: background 0.3s ease-in-out;
+        }
+
+        /* 🔹 Text Styling */
+        .category-btn span {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 22px;
+            font-weight: bold;
+            color: white;
+            z-index: 2;
+            text-shadow: 2px 2px 5px black;
+        }
+
+        /* 🔹 Hover Animation */
+        .category-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(255, 0, 0, 0.3);
+        }
+        .category-btn:hover::before {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        /* 🔹 Product Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            padding: 20px;
+            justify-items: center;
+        }
+
+        .product-card {
+            width: 200px;
+            background: #222;
+            color: white;
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 180px;
+            border-radius: 10px;
+        }
+
+        .product-card:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="bg-black text-white">
+
+    <!-- 🔹 Header -->
+    <header class="p-4 flex justify-between items-center shadow-lg bg-black">
+        <h1 class="text-3xl font-bold text-red-500">Thriftique</h1>
+        <input type="text" placeholder="Search..." class="border px-4 py-2 rounded-lg focus:ring focus:ring-red-500">
+        <div class="space-x-4">
+            <button class="glow-btn">Login</button>
+            <button class="glow-btn">🛒 Cart</button>
+        </div>
+    </header>
+
+    <!-- 🔹 Hero Section -->
+    <main class="p-8 text-center">
+        <h2 class="text-4xl font-bold text-red-500">🔥 Bold Fashion, Best Prices 🔥</h2>
+        <p class="text-lg">Shop the trendiest thrift pieces now.</p>
+        <button class="mt-4 glow-btn">Start Shopping</button>
+    </main>
+
+    <!-- 🔹 Category Buttons (Now Fully Functional) -->
+    <div class="category-container">
+        <div class="category-btn" onclick="loadProducts('men')" style="background-image: url('./src/OHoddies.jpg');">
+            <span>👕 Men</span>
+        </div>
+        
+        <div class="category-btn" onclick="loadProducts('women')" style="background-image: url('./src/WomenFashion.jpg');">
+            <span>👗 Women</span>
+        </div>
+        <div class="category-btn" onclick="loadProducts('accessories')" style="background-image: url('./src/Accessories.jpg');">
+            <span>👜 Accessories</span>
+        </div>
+        <div class="category-btn" onclick="loadProducts('luxury')" style="background-image: url('./src/Luxury.jpg');">
+            <span>💎 Luxury</span>
+        </div>
+    </div>
+
+    <!-- 🔹 Product Grid (Will Show Products When Clicked) -->
+    <div id="product-grid" class="product-grid"></div>
+
+    <!-- 🔹 Footer -->
+    <footer class="p-6 text-center mt-8 bg-black">
+        <p>&copy; 2025 Thriftique. 🔥 Stay Stylish, Stay Bold.</p>
+    </footer>
+
+    <!-- 🔹 JavaScript for Product Loading -->
+    <script>
+        const products = {
+            men: [
+                { name: "Casual Jacket", image: "./src/MensJacket.jpg" },
+                { name: "Denim Jeans", image: "./src/MensJeans.jpg" },
+                { name: "Stylish Sneakers", image: "./src/MensSneakers.jpg" }
+            ],
+            women: [
+                { name: "Floral Dress", image: "./src/WomensDress.jpg" },
+                { name: "Handbag", image: "./src/WomensHandbag.jpg" },
+                { name: "Heels", image: "./src/WomensHeels.jpg" }
+            ],
+            accessories: [
+                { name: "Sunglasses", image: "./src/AccessoriesSunglasses.jpg" },
+                { name: "Watch", image: "./src/AccessoriesWatch.jpg" },
+                { name: "Hat", image: "./src/AccessoriesHat.jpg" }
+            ],
+            luxury: [
+                { name: "Luxury Bag", image: "./src/LuxuryBag.jpg" },
+                { name: "Gold Necklace", image: "./src/LuxuryNecklace.jpg" },
+                { name: "Branded Shoes", image: "./src/LuxuryShoes.jpg" }
+            ]
+        };
+
+        function loadProducts(category) {
+            const grid = document.getElementById("product-grid");
+            grid.innerHTML = ""; // Clear previous items
+
+            products[category].forEach(product => {
+                const productCard = document.createElement("div");
+                productCard.classList.add("product-card");
+
+                productCard.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                `;
+
+                grid.appendChild(productCard);
+            });
+        }
+    </script>
+
+</body>
+</html>
