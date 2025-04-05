@@ -4,8 +4,7 @@ import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import mongoose from 'mongoose';
-import productRoutes from './productRoutes.js'; // ✅ Updated path
-  // Adjusted path
+import productRoutes from './productRoutes.js';
 
 // Load environment variables
 dotenv.config();
@@ -20,8 +19,11 @@ app.use(express.json());
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Serve static files from "src"
-app.use(express.static(__dirname));
+// Serve static files from root directory
+app.use(express.static(path.join(__dirname, '..')));
+
+// Serve static files from src directory for images
+app.use('/src', express.static(path.join(__dirname)));
 
 // MongoDB Connection
 const connectDB = async () => {
@@ -44,7 +46,7 @@ app.use('/api/products', productRoutes);
 
 // Serve Frontend
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'index.html'));  // Adjusted path to root
+    res.sendFile(path.join(__dirname, '..', 'index.html'));
 });
 
 // 404 Handler
