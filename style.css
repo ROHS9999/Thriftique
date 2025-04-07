@@ -17,13 +17,21 @@ body {
 
 /* Header styles */
 header {
-  background-color: #1a1a1a;
-  padding: 1rem 0;
-  position: fixed;
-  width: 100%;
+  padding: 0.5rem 1rem; /* Reduce padding */
+  margin: 0; /* Remove unnecessary margins */
+  position: fixed; /* Keep the header fixed at the top */
   top: 0;
-  z-index: 1000;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  left: 0;
+  width: 100%; /* Ensure it spans the full width */
+  background-color: #1a1a1a; /* Optional: Add a background color */
+  z-index: 1000; /* Ensure it stays above other elements */
+}
+
+header h1 {
+  font-size: 1.5rem; /* Adjust font size */
+  margin: 0; /* Remove extra margin */
+  line-height: 1.2; /* Adjust line height */
+  color: #fff; /* Ensure text is readable */
 }
 
 .header-container {
@@ -144,16 +152,18 @@ nav a.active {
 /* Hero section */
 .hero {
   height: 500px;
-  background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url('src/OHoddies.jpg') center/80% no-repeat;
+  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), /* Lighter gradient */
+              url('src/OHoddies.jpg') center/cover no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   color: #fff;
-  margin-top: 80px;
-  margin-bottom: 3rem;
-  border-radius: 60px;
+  margin: 0; /* Remove margins to stretch full width */
+  width: 100%; /* Ensure it spans the full width of the screen */
+  border-radius: 0; /* Remove rounded corners */
   overflow: hidden;
+  margin-top: 2rem; /* Add margin to drag it down */
 }
 
 .hero-content {
@@ -174,7 +184,6 @@ nav a.active {
   margin-bottom: 2rem;
   color: #cccccc;
 }
-
 .hero .btn {
   background-color: #ff3333;
   color: white;
@@ -516,6 +525,48 @@ footer {
   .hero-content {
     padding: 1rem;
   }
+
+  header h1 {
+    font-size: 1.2rem; /* Smaller font size for mobile */
+  }
+
+  .cart-container {
+    margin-top: 2rem; /* Adjust spacing for mobile */
+  }
+
+  .cart-item {
+    flex: 1 1 calc(50% - 1.5rem); /* 2 items per row */
+    max-width: calc(50% - 1.5rem);
+  }
+
+  .cart-container {
+    margin-top: 2rem; /* Default spacing for mobile */
+  }
+
+  .cart-item {
+    flex-direction: column; /* Stack content vertically */
+    align-items: flex-start;
+  }
+
+  .cart-item img {
+    margin-right: 0; /* Remove spacing for stacked layout */
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .category-buttons {
+    grid-template-columns: 1fr;
+  }
+
+  .cart-item {
+    flex: 1 1 100%; /* 1 item per row */
+    max-width: 100%;
+  }
+
+  .cart-item {
+    width: 100%; /* Full width for small screens */
+  }
 }
 
 /* Scrollbar styles */
@@ -629,4 +680,59 @@ a:hover {
 
 .product-details {
     margin-top: 1rem;
+}
+
+.cart-container {
+  margin-top: 2rem; /* Default spacing below the header */
+  padding: 1rem;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block; /* Revert to block layout */
+}
+
+.cart-item {
+  width: 100%; /* Full width for each item */
+  background-color: #1a1a1a;
+  border: 1px solid #404040;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1rem; /* Add spacing between items */
+  display: flex;
+  flex-direction: row; /* Horizontal layout for item content */
+  align-items: center;
+}
+
+.cart-item img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-right: 1rem; /* Add spacing between image and text */
+}
+
+.cart-item h3 {
+  font-size: 1.2rem;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+
+.cart-item p {
+  font-size: 1rem;
+  color: #cccccc;
+  margin-bottom: 1rem;
+}
+
+.cart-item .remove-btn {
+  background-color: #ff3333;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.cart-item .remove-btn:hover {
+  background-color: #ff1a1a;
 }

@@ -1,3 +1,19 @@
+const mongoose = require('mongoose');
+const Product = require('./models/Product'); // Adjust the path to your Product model
+
+mongoose.connect('your_mongodb_connection_string', { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => {
+    console.log('Connected to MongoDB');
+    return Product.find({ category: "Accessories" });
+  })
+  .then(products => {
+    console.log('Accessories Products:', products);
+    mongoose.disconnect();
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+
 document.addEventListener("DOMContentLoaded", () => {
   loadProducts();
   setupSearch();
@@ -57,3 +73,16 @@ function setupSearch() {
     loadProducts(null, searchQuery);
   });
 }
+
+app.get('/api/products/:id', async (req, res) => {
+  const productId = req.params.id;
+  try {
+    const product = await Product.findById(productId); // Fetch product by ID
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+    res.json(product);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});

@@ -65,3 +65,31 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
+
+document.querySelectorAll('.product-card').forEach((card) => {
+  card.addEventListener('click', () => {
+    const productId = card.dataset.id; // Get the product ID
+    window.location.href = `/product-details.html?id=${productId}`;
+  });
+});
+
+const urlParams = new URLSearchParams(window.location.search);
+const productId = urlParams.get('id');
+
+fetch(`/api/products/${productId}`)
+  .then((response) => response.json())
+  .then((product) => {
+    if (!product) {
+      throw new Error('Product not found');
+    }
+    document.querySelector('.product-title').textContent = product.name;
+    document.querySelector('.product-description').textContent = product.description;
+    document.querySelector('.product-price').textContent = `$${product.price}`;
+    document.querySelector('.product-detail-image').src = product.image;
+  })
+  .catch((error) => {
+    console.error('Error fetching product details:', error);
+    document.querySelector('.product-details-container').innerHTML = `
+      <p style="color: red;">Unable to load product details. Please try again later.</p>
+    `;
+  });
